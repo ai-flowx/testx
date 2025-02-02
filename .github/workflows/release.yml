@@ -16,17 +16,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Publish promptfoo
+      - name: Publish
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64
-          file: Dockerfile-promptfoo 
+          file: Dockerfile
           push: true
-          tags: craftslab/promptfoo:latest
-      - name: Publish prompttools
-        uses: docker/build-push-action@v6
-        with:
-          platforms: linux/amd64
-          file: Dockerfile-prompttools 
-          push: true
-          tags: craftslab/prompttools:latest
+          tags: craftslab/testx:latest
