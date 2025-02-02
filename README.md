@@ -12,6 +12,32 @@
 
 
 
+## Build
+
+```bash
+docker build -f Dockerfile -t craftslab/testx:latest .
+```
+
+
+
+## Run
+
+### Default mode
+
+```bash
+docker run -v $PWD:/home/craftslab craftslab/testx:latest
+```
+
+
+
+### Customized mode
+
+```bash
+docker run -v $PWD:/tmp craftslab/testx:latest eval --no-progress-bar --no-table -c /tmp/config.yml -o /tmp/output.html
+```
+
+
+
 ## Reference
 
 - [promptfoo](https://github.com/promptfoo/promptfoo)

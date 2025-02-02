@@ -35,3 +35,8 @@ RUN curl -L https://nodejs.org/dist/v22.13.1/node-v22.13.1-linux-x64.tar.xz -o n
     sudo mv node-v22.13.1-linux-x64 /opt/node && \
     rm -f node.tar.xz
 RUN npm install -g promptfoo
+
+USER craftslab
+WORKDIR /home/craftslab
+ENTRYPOINT ["promptfoo"]
+CMD ["eval", "--no-progress-bar", "--no-table", "-c", "config.yml", "-o", "output.html"]
