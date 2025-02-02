@@ -13,8 +13,6 @@ RUN apt update -y > /dev/null && \
     apt install -y bzip2 ca-certificates curl git gnupg && \
     apt install -y python3 python3-dev python3-pip python3-venv && \
     apt install -y sudo unzip vim wget xz-utils zip
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt install -y nodejs
 RUN apt autoremove --purge -y > /dev/null && \
     apt autoclean -y > /dev/null && \
     rm -rf /var/lib/apt/lists/* && \
@@ -31,4 +29,9 @@ RUN echo "alias pip=pip3" | tee --append /etc/bash.bashrc && \
 
 USER craftslab
 WORKDIR /home/craftslab
-RUN sudo npm install -g promptfoo
+ENV PATH=/opt/node/bin:$PATH
+RUN curl -L https://nodejs.org/dist/v22.13.1/node-v22.13.1-linux-x64.tar.xz -o node.tar.xz && \
+    tar Jxvf node.tar.xz && \
+    sudo mv node-v22.13.1-linux-x64 /opt/node && \
+    rm -f node.tar.xz
+RUN npm install -g promptfoo
