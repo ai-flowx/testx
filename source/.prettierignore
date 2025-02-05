@@ -1,0 +1,14 @@
+.aider*
+.coverage
+dist
+drizzle
+examples/adaline-gateway/adaline-chat-history/prompt.json
+examples/adaline-gateway/adaline-embedding-similarity/prompt.json
+examples/multiple-turn-conversation/prompt.json
+examples/openai-chat-history/prompt.json
+examples/simple-test/output.html
+helm/chart/promptfoo/templates/**/*.yaml
+site/.docusaurus
+site/build
+site/static/config-schema.json
+venv

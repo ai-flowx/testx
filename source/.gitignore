@@ -1,0 +1,29 @@
+# Environment and local config
+.env
+.local
+
+# Temporary and generated files
+scratch
+*.sw[op]
+*.log
+.DS_Store
+node_modules
+dist
+.aider*
+.vite
+*.tsbuildinfo
+
+# Python-related
+__pycache__
+
+# Jest and test-related
+.coverage
+.ruff_cache
+
+# IDE-specific
+.idea/
+
+# Examples-related
+examples/**/package-lock.json
+examples/redteam-dalle/images
+
