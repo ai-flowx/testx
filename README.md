@@ -41,4 +41,6 @@ docker run -v $PWD:/tmp craftslab/testx:latest eval --no-progress-bar --no-table
 ## Reference
 
 - [promptfoo](https://github.com/promptfoo/promptfoo)
+- [promptfoo-add-ollama-provider](https://github.com/promptfoo/promptfoo/commit/4e6b580f7bba9f9b69890f4a5ae46888bb269ae8)
+- [promptfoo-add-support-for-ollama-options](https://github.com/promptfoo/promptfoo/commit/115bff97b3392da8b329510dea70b5aeb231cb69)
 - [prompttools](https://github.com/hegelai/prompttools)
