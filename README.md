@@ -8,7 +8,7 @@
 
 ## Introduction
 
-*testx* is the test tools for prompts, LLMs, and vector databases.
+*testx* is the test tools for prompts, llms, and vector databases.
 
 
 
