@@ -118,6 +118,8 @@ export type EnvVars = {
   REPLICATE_TEMPERATURE?: number;
   REPLICATE_TOP_K?: number;
   REPLICATE_TOP_P?: number;
+  SILICONFLOW_API_KEY?: string;
+  SILICONFLOW_BASE_URL?: string;
   VERTEX_API_VERSION?: string;
   VOYAGE_API_BASE_URL?: string;
   VOYAGE_API_KEY?: string;

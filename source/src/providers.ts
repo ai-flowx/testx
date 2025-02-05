@@ -65,6 +65,7 @@ import {
 } from './providers/replicate';
 import { ScriptCompletionProvider } from './providers/scriptCompletion';
 import { SequenceProvider } from './providers/sequence';
+import { SiliconflowChatProvider } from './providers/siliconflow';
 import { SimulatedUser } from './providers/simulatedUser';
 import { createTogetherAiProvider } from './providers/togetherai';
 import { VertexChatProvider, VertexEmbeddingProvider } from './providers/vertex';
@@ -588,6 +589,16 @@ export async function loadApiProvider(
     } else {
       ret = new AlibabaChatCompletionProvider(modelName || modelType, providerOptions);
     }
+  } else if (providerPath.startsWith('siliconflow:')) {
+    const splits = providerPath.split(':');
+    const firstPart = splits[1];
+    if (firstPart === 'chat') {
+      const modelName = splits.slice(2).join(':');
+      ret = new SiliconflowChatProvider(modelName, providerOptions);
+    } else {
+      const modelName = splits.slice(1).join(':');
+      ret = new SiliconflowChatProvider(modelName, providerOptions);
+    }
   } else {
     logger.error(dedent`
       Could not identify provider: ${chalk.bold(providerPath)}.
@@ -708,6 +719,7 @@ export default {
   PortkeyChatCompletionProvider,
   PythonProvider,
   ScriptCompletionProvider,
+  SiliconflowChatProvider,
   VertexChatProvider,
   VertexEmbeddingProvider,
   VoyageEmbeddingProvider,
