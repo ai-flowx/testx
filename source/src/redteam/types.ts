@@ -30,6 +30,7 @@ type TestCase = {
   provider?: string | ProviderOptions | ApiProvider;
   providerOutput?: string | Record<string, unknown>;
   assert?: any;
+  options?: any;
 };
 
 // Derived types
@@ -95,6 +96,7 @@ export interface RedteamFileConfig extends CommonOptions {
 }
 
 export interface SynthesizeOptions extends CommonOptions {
+  abortSignal?: AbortSignal;
   entities?: string[];
   language: string;
   maxConcurrency?: number;
@@ -102,7 +104,7 @@ export interface SynthesizeOptions extends CommonOptions {
   plugins: (RedteamPluginObject & { id: string; numTests: number })[];
   prompts: [string, ...string[]];
   strategies: RedteamStrategyObject[];
-  abortSignal?: AbortSignal;
+  targetLabels: string[];
 }
 
 export type RedteamAssertionTypes = `promptfoo:redteam:${string}`;

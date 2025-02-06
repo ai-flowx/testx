@@ -47,14 +47,12 @@ import {
   OllamaCompletionProvider,
   OllamaChatProvider,
 } from './providers/ollama';
-import {
-  OpenAiAssistantProvider,
-  OpenAiCompletionProvider,
-  OpenAiChatCompletionProvider,
-  OpenAiEmbeddingProvider,
-  OpenAiImageProvider,
-  OpenAiModerationProvider,
-} from './providers/openai';
+import { OpenAiAssistantProvider } from './providers/openai/assistant';
+import { OpenAiChatCompletionProvider } from './providers/openai/chat';
+import { OpenAiCompletionProvider } from './providers/openai/completion';
+import { OpenAiEmbeddingProvider } from './providers/openai/embedding';
+import { OpenAiImageProvider } from './providers/openai/image';
+import { OpenAiModerationProvider } from './providers/openai/moderation';
 import { parsePackageProvider } from './providers/packageParser';
 import { PortkeyChatCompletionProvider } from './providers/portkey';
 import { PythonProvider } from './providers/pythonCompletion';
@@ -80,6 +78,7 @@ import RedteamGoatProvider from './redteam/providers/goat';
 import RedteamIterativeProvider from './redteam/providers/iterative';
 import RedteamImageIterativeProvider from './redteam/providers/iterativeImage';
 import RedteamIterativeTreeProvider from './redteam/providers/iterativeTree';
+import RedteamPandamoniumProvider from './redteam/providers/pandamonium';
 import type { LoadApiProviderContext, TestSuiteConfig } from './types';
 import type { EnvOverrides } from './types/env';
 import type { ApiProvider, ProviderOptions, ProviderOptionsMap } from './types/providers';
@@ -538,6 +537,8 @@ export async function loadApiProvider(
     ret = new RedteamImageIterativeProvider(providerOptions.config);
   } else if (providerPath === 'promptfoo:redteam:iterative:tree') {
     ret = new RedteamIterativeTreeProvider(providerOptions.config);
+  } else if (providerPath === 'promptfoo:redteam:pandamonium') {
+    ret = new RedteamPandamoniumProvider(providerOptions.config);
   } else if (providerPath === 'promptfoo:simulated-user') {
     ret = new SimulatedUser(providerOptions);
   } else if (providerPath === 'sequence') {
