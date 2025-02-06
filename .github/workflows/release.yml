@@ -18,7 +18,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: |
           pushd source || exit 0
-          npm publish
+          npm install && npm run build && npm publish
           popd || exit 0
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TESTX_NPM_TOKEN }}
