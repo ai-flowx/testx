@@ -25,7 +25,11 @@ docker build -f Dockerfile -t craftslab/testx:latest .
 ### Default mode
 
 ```bash
-docker run -v $PWD:/home/craftslab craftslab/testx:latest
+docker run \
+  -e SILICONFLOW_BASE_URL=$SILICONFLOW_BASE_URL \
+  -e SILICONFLOW_API_KEY=$SILICONFLOW_API_KEY \
+  -v $PWD:/home/craftslab \
+  craftslab/testx:latest
 ```
 
 
@@ -33,7 +37,11 @@ docker run -v $PWD:/home/craftslab craftslab/testx:latest
 ### Customized mode
 
 ```bash
-docker run -v $PWD:/tmp craftslab/testx:latest eval --no-progress-bar --no-table -c /tmp/config.yml -o /tmp/output.html
+docker run \
+  -e SILICONFLOW_BASE_URL=$SILICONFLOW_BASE_URL \
+  -e SILICONFLOW_API_KEY=$SILICONFLOW_API_KEY \
+  -v $PWD:/tmp \
+  craftslab/testx:latest eval --no-progress-bar --no-table -c /tmp/config.yml -o /tmp/output.html
 ```
 
 
