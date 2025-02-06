@@ -11,9 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        working-directory: ${{ github.workspace }}/source
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: '${{ github.workspace }}/source/.nvmrc'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
       - run: npm publish
