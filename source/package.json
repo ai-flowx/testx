@@ -1,13 +1,16 @@
 {
-  "name": "promptfoo",
+  "name": "@ai-flowx/testx",
   "description": "LLM eval & testing toolkit",
-  "author": "Ian Webster",
-  "version": "0.104.0",
+  "author": "craftslab",
+  "version": "0.5.0",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "commonjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/promptfoo/promptfoo.git"
+    "url": "git+https://github.com/ai-flowx/testx.git"
   },
   "main": "dist/src/index.js",
   "exports": {

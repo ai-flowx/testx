@@ -6,7 +6,21 @@ on:
     - created
 
 jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm publish
+        working-directory: ${{ github.workspace }}/source
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TESTX_NPM_TOKEN }}
   docker:
+    needs: publish
     runs-on: ubuntu-latest
     steps:
       - name: Setup docker

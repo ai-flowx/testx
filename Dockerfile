@@ -34,7 +34,7 @@ RUN curl -L https://nodejs.org/dist/v22.13.1/node-v22.13.1-linux-x64.tar.xz -o n
     tar Jxvf node.tar.xz && \
     sudo mv node-v22.13.1-linux-x64 /opt/node && \
     rm -f node.tar.xz
-RUN npm install -g promptfoo
+RUN npm install -g @ai-flowx/testx
 
 USER craftslab
 WORKDIR /home/craftslab
