@@ -4,23 +4,89 @@ import logger from '../logger';
 import type { ApiProvider, ProviderResponse } from '../types';
 import { REQUEST_TIMEOUT_MS, parseChatPrompt } from './shared';
 
-interface SiliconflowChatOptions {
-  // TBD: FIXME
+interface SiliconFlowChatOptions {
+  frequency_penalty?: number;
+  max_tokens?: number;
+  n?: number;
+  response_format?: ResponseFormat;
+  stop?: string[];
+  stream?: boolean;
+  temperature?: number;
+  tools?: RequestTool[];
 }
 
-const SiliconflowChatOptionKeys = new Set<keyof SiliconflowChatOptions>([
-  // TBD: FIXME
+interface ResponseFormat {
+  type: string;
+}
+
+interface RequestTool {
+  function: RequestFunction;
+  type: string;
+  top_k?: number;
+  top_p?: number;
+}
+
+interface RequestFunction {
+  name: string;
+  description: string;
+  parameters?: object;
+  strict?: boolean;
+}
+
+const SiliconFlowChatOptionKeys = new Set<keyof SiliconFlowChatOptions>([
+  'frequency_penalty',
+  'max_tokens',
+  'n',
+  'response_format',
+  'stop',
+  'stream',
+  'temperature',
+  'tools',
 ]);
 
-interface SiliconflowChatJsonL {
-  // TBD: FIXME
+interface SiliconFlowChatJsonL {
+  choices?: ResponseChoice[];
+  created?: number;
+  id?: string;
+  model?: string;
+  object?: string;
+  tool_calls?: ResponseToolCall[];
+  usage?: ResponseUsage;
 }
 
-export class SiliconflowChatProvider implements ApiProvider {
-  modelName: string;
-  config: SiliconflowChatOptions;
+interface ResponseChoice {
+  finish_reason?: string;
+  message?: ResponseMessage;
+}
 
-  constructor(modelName: string, options: { id?: string; config?: SiliconflowChatOptions } = {}) {
+interface ResponseMessage {
+  content?: string;
+  reasoning_content?: string;
+  role?: string;
+}
+
+interface ResponseToolCall {
+  function: ResponseFunction;
+  id: string;
+  type: string;
+}
+
+interface ResponseFunction {
+  arguments: string;
+  name: string;
+}
+
+interface ResponseUsage {
+  completion_token?: number;
+  prompt_token?: number;
+  total_tokens?: number;
+}
+
+export class SiliconFlowChatProvider implements ApiProvider {
+  modelName: string;
+  config: SiliconFlowChatOptions;
+
+  constructor(modelName: string, options: { id?: string; config?: SiliconFlowChatOptions } = {}) {
     const { id, config } = options;
     this.modelName = modelName;
     this.id = id ? () => id : this.id;
@@ -32,7 +98,7 @@ export class SiliconflowChatProvider implements ApiProvider {
   }
 
   toString(): string {
-    return `[Siliconflow Chat Provider ${this.modelName}]`;
+    return `[SiliconFlow Chat Provider ${this.modelName}]`;
   }
 
   async callApi(prompt: string): Promise<ProviderResponse> {
@@ -43,19 +109,22 @@ export class SiliconflowChatProvider implements ApiProvider {
       messages,
       options: Object.keys(this.config).reduce(
         (options, key) => {
-          const optionName = key as keyof SiliconflowChatOptions;
-          if (SiliconflowChatOptionKeys.has(optionName)) {
+          const optionName = key as keyof SiliconFlowChatOptions;
+          if (SiliconFlowChatOptionKeys.has(optionName)) {
             options[optionName] = this.config[optionName];
           }
           return options;
         },
         {} as Partial<
-          Record<keyof SiliconflowChatOptions, number | boolean | string[] | undefined>
+          Record<
+            keyof SiliconFlowChatOptions,
+            number | boolean | string[] | ResponseFormat | RequestTool[] | undefined
+          >
         >,
       ),
     };
 
-    logger.debug(`Calling Siliconflow API: ${JSON.stringify(params)}`);
+    logger.debug(`Calling SiliconFlow API: ${JSON.stringify(params)}`);
     let response;
     try {
       response = await fetchWithCache(
@@ -78,10 +147,10 @@ export class SiliconflowChatProvider implements ApiProvider {
         error: `API call error: ${String(err)}. Output:\n${response?.data}`,
       };
     }
-    logger.debug(`\tSiliconflow generate API response: ${response.data}`);
+    logger.debug(`\tSiliconFlow generate API response: ${response.data}`);
     if (response.data.error) {
       return {
-        error: `Siliconflow error: ${response.data.error}`,
+        error: `SiliconFlow error: ${response.data.error}`,
       };
     }
 
@@ -90,9 +159,17 @@ export class SiliconflowChatProvider implements ApiProvider {
         .split('\n')
         .filter((line: string) => line.trim() !== '')
         .map((line: string) => {
-          const parsed = JSON.parse(line) as SiliconflowChatJsonL;
-          if (parsed.message?.content) {
-            return parsed.message.content;
+          const parsed = JSON.parse(line) as SiliconFlowChatJsonL;
+          if (!parsed.choices || !Array.isArray(parsed.choices)) {
+            logger.debug(`\tSiliconFlow API response error: invalid parsed.choices`);
+            return null;
+          }
+          if (parsed.choices.length !== 1) {
+            logger.debug(`\tSiliconFlow API response error: parsed.choices length !== 1`);
+            return null;
+          }
+          if (parsed.choices[0].message?.content) {
+            return parsed.choices[0].message.content;
           }
           return null;
         })
@@ -104,7 +181,7 @@ export class SiliconflowChatProvider implements ApiProvider {
       };
     } catch (err) {
       return {
-        error: `Siliconflow API response error: ${String(err)}: ${JSON.stringify(response.data)}`,
+        error: `SiliconFlow API response error: ${String(err)}: ${JSON.stringify(response.data)}`,
       };
     }
   }

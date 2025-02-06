@@ -52,6 +52,7 @@ providers:
 | [LocalAI](./localai.md)                             | Local                                      | `localai:gpt4all-j`                               |
 | [Llamafile](./llamafile.md)                         | OpenAI-compatible llamafile server         | Uses OpenAI provider with custom endpoint         |
 | [llama.cpp](./llama.cpp.md)                         | Local                                      | `llama:7b`                                        |
+| [SiliconFlow](./siliconflow.md)                     | Local                                      | `siliconflow:deepseek-ai/DeepSeek-R1`             |
 | [Text Generation WebUI](./text-generation-webui.md) | Gradio WebUI                               | Compatible with OpenAI syntax                     |
 | [WebSocket](./websocket.md)                         | WebSocket-based providers                  | `ws://example.com/ws`                             |
 | [Webhook](./webhook.md)                             | Custom - Webhook integration               | `webhook:http://example.com/webhook`              |

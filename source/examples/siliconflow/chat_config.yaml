@@ -1,7 +1,5 @@
-description: "testx"
-
 prompts:
-  - file://prompt.json
+  - What is the capital of the {{country}}?
 
 providers:
   - id: siliconflow:deepseek-ai/DeepSeek-R1-Distill-Llama-8B

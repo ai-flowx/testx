@@ -5,6 +5,6 @@
   },
   {
     "role": "user",
-    "content": "Tell me about {{topic}}"
+    "content": "What is the capital of the {{country}}?"
   }
 ]

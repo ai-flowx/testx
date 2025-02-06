@@ -65,7 +65,7 @@ import {
 } from './providers/replicate';
 import { ScriptCompletionProvider } from './providers/scriptCompletion';
 import { SequenceProvider } from './providers/sequence';
-import { SiliconflowChatProvider } from './providers/siliconflow';
+import { SiliconFlowChatProvider } from './providers/siliconflow';
 import { SimulatedUser } from './providers/simulatedUser';
 import { createTogetherAiProvider } from './providers/togetherai';
 import { VertexChatProvider, VertexEmbeddingProvider } from './providers/vertex';
@@ -594,10 +594,10 @@ export async function loadApiProvider(
     const firstPart = splits[1];
     if (firstPart === 'chat') {
       const modelName = splits.slice(2).join(':');
-      ret = new SiliconflowChatProvider(modelName, providerOptions);
+      ret = new SiliconFlowChatProvider(modelName, providerOptions);
     } else {
       const modelName = splits.slice(1).join(':');
-      ret = new SiliconflowChatProvider(modelName, providerOptions);
+      ret = new SiliconFlowChatProvider(modelName, providerOptions);
     }
   } else {
     logger.error(dedent`
@@ -719,7 +719,7 @@ export default {
   PortkeyChatCompletionProvider,
   PythonProvider,
   ScriptCompletionProvider,
-  SiliconflowChatProvider,
+  SiliconFlowChatProvider,
   VertexChatProvider,
   VertexEmbeddingProvider,
   VoyageEmbeddingProvider,
