@@ -38,5 +38,5 @@ RUN npm install -g @ai-flowx/testx
 
 USER craftslab
 WORKDIR /home/craftslab
-ENTRYPOINT ["promptfoo"]
+ENTRYPOINT ["testx"]
 CMD ["eval", "--no-progress-bar", "--no-table", "-c", "config.yml", "-o", "output.html"]
