@@ -12,11 +12,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version-file: '${{ github.workspace }}/source/.nvmrc'
+          node-version-file: 'source/.nvmrc'
           cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm publish
-        working-directory: ${{ github.workspace }}/source
+      - run: |
+          pushd source || exit 0
+          npm publish
+          popd || exit 0
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TESTX_NPM_TOKEN }}
   docker:
